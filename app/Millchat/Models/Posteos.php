@@ -73,7 +73,7 @@ class Posteos implements JsonSerializable
     public static function getById($id_posteo)
     {
         $db = DB::getConnection();
-        $query = "SELECT * FROM posteo WHERE id_posteo=?";
+        $query = "SELECT * FROM posteo p JOIN perfil_usuario u ON u.id_usuario = p.id_usuario_posteo WHERE p.id_posteo=?";
         $statement = $db->prepare($query);
         $statement->bindParam(1, $id_posteo);
         $statement->execute();
@@ -112,7 +112,7 @@ class Posteos implements JsonSerializable
     public function traer_todos()
     {
         $db = DB::getConnection();
-        $query = "SELECT * FROM posteo ORDER BY fecha DESC";
+        $query = "SELECT * FROM posteo p JOIN perfil_usuario u ON u.id_usuario = p.id_usuario_posteo ORDER BY p.fecha DESC";
         $statement = $db->prepare($query);
         $statement->execute();
         $posteos = array();
